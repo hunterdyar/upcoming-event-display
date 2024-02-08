@@ -48,22 +48,24 @@ def get_next_event(calendar):
         return False
 
 def render_event():
-    logging.info("Getting calendar events from url "+url)
+    logging.info("Getting calendar events from url")
     c = Calendar(requests.get(url).text)
     current = get_current_event(c)
     if current:
         if is_all_day(current):
+            logging.info("have an event all day today.")
             return draw.all_day_today(current)
         else:
+            logging.info("have an event right now")
             return draw.current(current)
 
     next = get_next_event(c)
     if next:
+        logging.info("have an upcoming events")
         return draw.next(next,is_all_day(next))
 
-    draw.no_events()
-    print("done.")
-
+    logging.info("No events")
+    return draw.no_events()
 
 if __name__ == "__main__":
     main()
