@@ -7,24 +7,35 @@ import os
 import logging
 from PIL import Image,ImageDraw, ImageFont
 
+has_display = True
+# noinspection PyBroadException
+try:
+    from lib.waveshare_epd import epd7in5_V2
+    epd = epd7in5_V2.EPD()
+    epd.init()
+    epd.Clear()
+    has_display = True
+except:
+    logging.info("can't initiate EPD. Ignoring erros and assuming no display is connected or SPI is not configured")
+    has_display = False
 
-from lib.waveshare_epd import epd7in5_V2
 
 logging.basicConfig(level=logging.DEBUG)
 
 url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b1a@Chatham.edu/34b677cd9b964159b848d670242b969115323442578641261303/calendar.ics"
 def main():
     logging.info("Starting calendar image drawing...")
-    epd = epd7in5_V2.EPD()
-    epd.init()
-    epd.Clear()
+
 
     image = render_event()
 
     if image is not None:
-        epd.init_fast() #don't think we need to do this
-        epd.display(epd.getbuffer(image))
-        epd.sleep()
+        if has_display:
+            epd.init_fast() #don't think we need to do this
+            epd.display(epd.getbuffer(image))
+            epd.sleep()
+        else:
+            image.show()
     else:
         logging.error("drawing failed. Image is... "+str(image))
 
@@ -49,12 +60,12 @@ def get_next_event(calendar):
 
 def render_event():
     logging.info("Getting calendar events from url")
-    cr = Calendar(requests.get(url))
-    if cr.status_code != requests.code.ok:
+    cr = requests.get(url)
+    if cr.status_code != requests.codes.ok:
         logging.error("Web lookup Error:"+cr.status_code)
         return draw.error_code(cr.status_code)
 
-    c = cr.text
+    c = Calendar(cr.text)
     current = get_current_event(c)
     if current:
         if is_all_day(current):
