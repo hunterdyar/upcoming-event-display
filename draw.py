@@ -1,6 +1,9 @@
 import arrow
 from PIL import Image,ImageDraw, ImageFont
 import logging
+
+#todo: change 800x480 to epd.width, epd.height (passing in values i guess)
+
 def pretty_start_time_string(time, all_day):
     begin = arrow.get(time)
     begin.to('US/Eastern')

@@ -5,13 +5,16 @@ import draw
 import sys
 import os
 import logging
+from PIL import Image,ImageDraw, ImageFont
+
+from waveshare_epd import epd7in5_V2
+
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
-from waveshare_epd import epd7in5_V2
-import time
+logging.basicConfig(level=logging.DEBUG)
 
 url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b1a@Chatham.edu/34b677cd9b964159b848d670242b969115323442578641261303/calendar.ics"
 def main():
@@ -21,8 +24,12 @@ def main():
     epd.Clear()
 
     image = render_event()
-    epd.display(epd.getbuffer(image))
-    epd.sleep()
+    if(image != None):
+        epd.init_fast() #don't think we need to do this
+        epd.display(epd.getbuffer(image))
+        epd.sleep()
+    else:
+        logging.info("drawing failed")
 
 def is_all_day(event):
     for e in event.extra:
