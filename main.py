@@ -20,12 +20,13 @@ def main():
     epd.Clear()
 
     image = render_event()
+
     if image is not None:
         epd.init_fast() #don't think we need to do this
         epd.display(epd.getbuffer(image))
         epd.sleep()
     else:
-        logging.info("drawing failed")
+        logging.error("drawing failed. Image is... "+str(image))
 
 def is_all_day(event):
     for e in event.extra:
@@ -52,15 +53,13 @@ def render_event():
     current = get_current_event(c)
     if current:
         if is_all_day(current):
-            draw.all_day_today(current)
+            return draw.all_day_today(current)
         else:
-            draw.current(current)
-        return
+            return draw.current(current)
 
     next = get_next_event(c)
     if next:
-        draw.next(next,is_all_day(next))
-        return
+        return draw.next(next,is_all_day(next))
 
     draw.no_events()
     print("done.")
