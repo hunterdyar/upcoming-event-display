@@ -7,12 +7,13 @@ import os
 import logging
 from PIL import Image,ImageDraw, ImageFont
 
-from waveshare_epd import epd7in5_V2
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
+
+from waveshare_epd import epd7in5_V2
 
 logging.basicConfig(level=logging.DEBUG)
 
