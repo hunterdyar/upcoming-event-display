@@ -2,10 +2,25 @@ from ics import Calendar
 import arrow
 import requests
 import draw
+import sys
+import os
+picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
+libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+if os.path.exists(libdir):
+    sys.path.append(libdir)
+
+from waveshare_epd import epd7in5_V2
+import time
 
 url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b1a@Chatham.edu/34b677cd9b964159b848d670242b969115323442578641261303/calendar.ics"
 def main():
-    render()
+    epd = epd7in5_V2.EPD()
+    epd.init()
+    epd.Clear()
+
+    image = render_event()
+    epd.display(epd.getbuffer(image))
+    epd.sleep()
 
 def is_all_day(event):
     for e in event.extra:
@@ -26,7 +41,7 @@ def get_next_event(calendar):
     else:
         return False
 
-def render():
+def render_event():
     c = Calendar(requests.get(url).text)
     current = get_current_event(c)
     if current:

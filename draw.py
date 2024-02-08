@@ -8,10 +8,10 @@ def pretty_start_time_string(time, all_day):
         return begin.format('MM/DD')
     else:
         return begin.humanize() + " - " + begin.format('dddd MM/DD hh:mm')
+
 def next(event,all_day=False):
     # New BW (only) image that is 800x400: the size of the 7.5e-ink display we are using.
     out = Image.new('1', (800, 480), 255)
-
     header_fnt = ImageFont.truetype("FreeMono.ttf", 64)
     desc_fnt = ImageFont.truetype("FreeMono.ttf", 24)
     d = ImageDraw.Draw(out)
@@ -23,11 +23,9 @@ def next(event,all_day=False):
     if(event.description):
         d.text((10, 140), event.description, font=desc_fnt)
 
-    out.show()
+    return out
 def current(event):
     out = Image.new('1', (800, 480), 255)
-
-    # get a font
     header_fnt = ImageFont.truetype("FreeMono.ttf", 64)
     desc_fnt = ImageFont.truetype("FreeMono.ttf", 24)
     d = ImageDraw.Draw(out)
@@ -42,25 +40,19 @@ def current(event):
     if (event.description):
         d.text((10, 170), event.description, font=desc_fnt)
 
-    out.show()
+    return out
 def all_day_today(event):
     out = Image.new('1', (800, 480), 255)
     header_fnt = ImageFont.truetype("FreeMono.ttf", 64)
     d = ImageDraw.Draw(out)
     d.multiline_text((10, 10), "Today: \n"+event.name, font=header_fnt, font_size=64)
-    out.show()
+    return out
 
 def no_events():
     out = Image.new('1', (800, 480), 255)
-
-    # get a font
     header_fnt = ImageFont.truetype("FreeMono.ttf", 64)
-
-    # get a drawing context
     d = ImageDraw.Draw(out)
-
-    # draw header
     d.multiline_text((10, 10), "no upcoming events", font=header_fnt, font_size=64)
-    out.show()
+    return out
 
 
