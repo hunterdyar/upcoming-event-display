@@ -49,7 +49,12 @@ def get_next_event(calendar):
 
 def render_event():
     logging.info("Getting calendar events from url")
-    c = Calendar(requests.get(url).text)
+    cr = Calendar(requests.get(url))
+    if cr.status_code != requests.code.ok:
+        logging.error("Web lookup Error:"+cr.status_code)
+        return draw.error_code(cr.status_code)
+
+    c = cr.text
     current = get_current_event(c)
     if current:
         if is_all_day(current):
