@@ -9,15 +9,7 @@ from PIL import Image,ImageDraw, ImageFont
 
 has_display = True
 # noinspection PyBroadException
-try:
-    from lib.waveshare_epd import epd7in5_V2
-    epd = epd7in5_V2.EPD()
-    epd.init()
-    epd.Clear()
-    has_display = True
-except:
-    logging.info("can't initiate EPD. Ignoring erros and assuming no display is connected or SPI is not configured")
-    has_display = False
+
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -25,13 +17,21 @@ logging.basicConfig(level=logging.DEBUG)
 url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b1a@Chatham.edu/34b677cd9b964159b848d670242b969115323442578641261303/calendar.ics"
 def main():
     logging.info("Starting calendar image drawing...")
-
-
     image = render_event()
+    try:
+        from lib.waveshare_epd import epd7in5_V2
+        epd = epd7in5_V2.EPD()
+        epd.init()
+        epd.Clear()
+        has_display = True
+    except:
+        logging.info("can't initiate EPD. Ignoring errors and assuming no display is connected or SPI is not configured")
+        has_display = False
+
 
     if image is not None:
         if has_display:
-            epd.init_fast() #don't think we need to do this
+            #epd.init_fast() #don't think we need to do this
             epd.display(epd.getbuffer(image))
             epd.sleep()
         else:
