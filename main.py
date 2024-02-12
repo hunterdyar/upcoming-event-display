@@ -2,15 +2,12 @@ from ics import Calendar
 import arrow
 import requests
 import draw
-import sys
-import os
 import logging
-from PIL import Image,ImageDraw, ImageFont
+from PIL import Image
 flipV = True
-flipH = False
+flipH = True
 incomingHoursShift = 5
 has_display = True
-# noinspection PyBroadException
 
 
 
@@ -20,11 +17,12 @@ url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b
 def main():
     logging.info("Starting calendar image drawing...")
     image = render_event()
-    if(flipV):
+    if flipV:
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
-    if(flipH):
+    if flipH:
         image = image.transpose(Image.FLIP_LEFT_RIGHT)
 
+    # noinspection PyBroadException
     try:
         from lib.waveshare_epd import epd7in5_V2
         epd = epd7in5_V2.EPD()
@@ -75,8 +73,8 @@ def render_event():
 
     c = Calendar(cr.text)
     for e in c.timeline:
-        e.begin = e.begin.shift(hours=incomingHoursShift)
         e.end = e.end.shift(hours=incomingHoursShift)
+        e.begin = e.begin.shift(hours=incomingHoursShift)
         e.begin = e.begin.to('US/Eastern')
         e.end = e.end.to('US/Eastern')
 
