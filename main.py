@@ -13,7 +13,7 @@ has_display = True
 
 logging.basicConfig(level=logging.DEBUG)
 
-url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b1a@Chatham.edu/34b677cd9b964159b848d670242b969115323442578641261303/calendar.ics"
+url = "https://outlook.office365.com/owa/calendar/95fbbcbe3b3346619f273bbe32109817@Chatham.edu/c31abb24c8a54356bb386bde49cf099215129222627318247751/calendar.ics"
 def main():
     logging.info("Starting calendar image drawing...")
     image = render_event()
