@@ -8,6 +8,7 @@ import logging
 from PIL import Image,ImageDraw, ImageFont
 flipV = True
 flipH = False
+incomingHoursShift = 5
 has_display = True
 # noinspection PyBroadException
 
@@ -74,9 +75,13 @@ def render_event():
 
     c = Calendar(cr.text)
     for e in c.timeline:
+        e.begin = e.begin.shift(hours=incomingHoursShift)
+        e.end = e.end.shift(hours=incomingHoursShift)
         e.begin = e.begin.to('US/Eastern')
         e.end = e.end.to('US/Eastern')
 
+    for e in c.timeline:
+        logging.info(e.begin)
     current = get_current_event(c)
     if current:
         if is_all_day(current):
