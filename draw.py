@@ -38,9 +38,9 @@ def next(event, all_day=False):
     # 100 is a guessing game for centering the text. Ideally we would be using the font_width, character_width_wrap and screen_width to calculate it.
     x = get_left_pos_for_centered_block(header_fnt)
     x = x
-    d.multiline_text((x, 30), name, font=header_fnt, align="center")
+    d.multiline_text((x, 80), name, font=header_fnt, align="center")
     time = pretty_start_time_string(event.begin, all_day)
-    d.text((screen_width / 2, screen_height - 20), time, font=desc_fnt, font_size=24, anchor="ms",
+    d.text((screen_width / 2, screen_height - 30), time, font=desc_fnt, font_size=24, anchor="ms",
            align="center")  # align to bottom middle of coordinates
 
     # our microsoft calendars don't like publishing descriptions?
@@ -56,15 +56,15 @@ def current(event):
     header_fnt = get_font(64)
     desc_fnt = get_font(24)
     d = ImageDraw.Draw(out)
-    bar_height = 90
+    bar_height = 150
     # Draw now text
     #Black bg top
     d.rectangle([(0,0),(screen_width,bar_height)], 0, 0, 0)
-    d.text((screen_width/2, 20), "Now:", font=header_fnt, align="center", anchor="mt",fill=255)
+    d.text((screen_width/2, 80), "Now:", font=header_fnt, align="center", anchor="mt",fill=255)
 
     name = textwrap.fill(event.name, character_width_wrap)
     x = get_left_pos_for_centered_block(header_fnt)
-    d.multiline_text((x, 100), name, font=header_fnt)
+    d.multiline_text((x, 160), name, font=header_fnt)
     begin = arrow.get(event.begin)
     # end = arrow.get(event.end)
 
@@ -72,7 +72,7 @@ def current(event):
     d.rectangle([(0,screen_height-50),(screen_width,screen_height)], 0, 0, 0)
     begin.to('US/Eastern')
     time = begin.format('dddd MM/DD hh:mm')
-    d.text((screen_width / 2, screen_height - 20), time, font=desc_fnt, font_size=24, anchor="ms",
+    d.text((screen_width / 2, screen_height - 30), time, font=desc_fnt, font_size=24, anchor="ms",
            align="center", fill=255)  # align to bottom middle of coordinates
     # our microsoft calendars don't like publishing descriptions?
 
