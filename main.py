@@ -66,6 +66,10 @@ def render_event():
         return draw.error_code(cr.status_code)
 
     c = Calendar(cr.text)
+    for e in c.timeline:
+        e.begin = e.begin.to('US/Eastern')
+        e.end = e.end.to('US/Eastern')
+
     current = get_current_event(c)
     if current:
         if is_all_day(current):
