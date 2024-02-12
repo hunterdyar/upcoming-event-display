@@ -6,7 +6,8 @@ import sys
 import os
 import logging
 from PIL import Image,ImageDraw, ImageFont
-
+flipV = True
+flipH = False
 has_display = True
 # noinspection PyBroadException
 
@@ -18,6 +19,11 @@ url = "https://outlook.office365.com/owa/calendar/baa6ac4f51934f25a56ce36bd3542b
 def main():
     logging.info("Starting calendar image drawing...")
     image = render_event()
+    if(flipV):
+        image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    if(flipH):
+        image = image.transpose(Image.FLIP_LEFT_RIGHT)
+
     try:
         from lib.waveshare_epd import epd7in5_V2
         epd = epd7in5_V2.EPD()
@@ -32,6 +38,7 @@ def main():
     if image is not None:
         if has_display:
             #epd.init_fast() #don't think we need to do this
+
             epd.display(epd.getbuffer(image))
             epd.sleep()
         else:
