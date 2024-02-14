@@ -28,6 +28,8 @@ def main():
         epd = epd7in5_V2.EPD()
         epd.init()
         epd.Clear()
+        # Set to true when we have the display
+
         has_display = True
     except:
         logging.info("can't initiate EPD. Ignoring errors and assuming no display is connected or SPI is not configured")
@@ -41,6 +43,9 @@ def main():
             epd.display(epd.getbuffer(image))
             epd.sleep()
         else:
+            # lol flip it back
+            image = image.transpose(Image.FLIP_TOP_BOTTOM)
+            image = image.transpose(Image.FLIP_LEFT_RIGHT)
             image.show()
     else:
         logging.error("drawing failed. Image is... "+str(image))

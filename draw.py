@@ -40,7 +40,7 @@ def next(event, all_day=False):
     x = x
     d.multiline_text((x, 80), name, font=header_fnt, align="center")
     time = pretty_start_time_string(event.begin, all_day)
-    d.text((screen_width / 2, screen_height - 30), time, font=desc_fnt, font_size=24, anchor="ms",
+    d.text((screen_width / 2, screen_height - 40), time, font=desc_fnt, font_size=24, anchor="ms",
            align="center")  # align to bottom middle of coordinates
 
     # our microsoft calendars don't like publishing descriptions?
@@ -69,10 +69,10 @@ def current(event):
     # end = arrow.get(event.end)
 
     #black bg bottom
-    d.rectangle([(0,screen_height-50),(screen_width,screen_height)], 0, 0, 0)
+    d.rectangle([(0,screen_height-60),(screen_width,screen_height)], 0, 0, 0)
     begin.to('US/Eastern')
     time = begin.format('dddd MM/DD hh:mm')
-    d.text((screen_width / 2, screen_height - 30), time, font=desc_fnt, font_size=24, anchor="ms",
+    d.text((screen_width / 2, screen_height - 40), time, font=desc_fnt, font_size=24, anchor="ms",
            align="center", fill=255)  # align to bottom middle of coordinates
     # our microsoft calendars don't like publishing descriptions?
 
