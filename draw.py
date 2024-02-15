@@ -15,7 +15,7 @@ def get_image():
 
 
 def get_font(size):
-    return ImageFont.truetype("FreeMono.ttf", size)
+    return ImageFont.truetype("RifficFree-Bold.ttf", size)
 
 
 def pretty_start_time_string(time, all_day):
