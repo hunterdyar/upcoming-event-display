@@ -24,15 +24,17 @@ def pretty_start_time_string(time, all_day):
     if all_day:
         return begin.format('MM/DD')
     else:
-        return begin.humanize() + " - " + begin.format('dddd MM/DD hh:mm')
+        humanized_time = begin.humanize()
+        formatted_time = begin.format('dddd MM/DD hh:mm')
+        return f"{humanized_time}\n{formatted_time}"
 
 
 def next(event, all_day=False):
     logging.info("Drawing Next event.")
     # New BW (only) image that is 800x400: the size of the 7.5e-ink display we are using.
     out = get_image()
-    header_fnt = get_font(64)
-    desc_fnt = get_font(24)
+    header_fnt = get_font(72)
+    desc_fnt = get_font(36)
     d = ImageDraw.Draw(out)
     name = textwrap.fill(event.name, character_width_wrap)
     # 100 is a guessing game for centering the text. Ideally we would be using the font_width, character_width_wrap and screen_width to calculate it.
