@@ -37,10 +37,9 @@ def next(event, all_day=False):
     desc_fnt = get_font(36)
     d = ImageDraw.Draw(out)
     name = textwrap.fill(event.name, character_width_wrap)
-    # 100 is a guessing game for centering the text. Ideally we would be using the font_width, character_width_wrap and screen_width to calculate it.
     x = get_left_pos_for_centered_block(header_fnt)
     x = x
-    d.multiline_text((x, 80), name, font=header_fnt, align="center")
+    d.multiline_text((screen_width / 2, 80), name, font=header_fnt, align="center")
     time = pretty_start_time_string(event.begin, all_day)
     d.text((screen_width / 2, screen_height - 40), time, font=desc_fnt, font_size=24, anchor="ms",
            align="center")  # align to bottom middle of coordinates
