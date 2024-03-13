@@ -39,15 +39,15 @@ def next(event, all_day=False):
     name = textwrap.fill(event.name, character_width_wrap)
     x = get_left_pos_for_centered_block(header_fnt)
     x = x
-    d.multiline_text((screen_width / 2, 80), name, font=header_fnt, anchor="ms",
+    d.multiline_text((screen_width / 2, 150), name, font=header_fnt, anchor="ms",
            align="center")
     time = pretty_start_time_string(event.begin, all_day)
-    d.text((screen_width / 2, screen_height - 40), time, font=desc_fnt, font_size=36, anchor="ms",
+    d.text((screen_width / 2, screen_height - 100), time, font=desc_fnt, font_size=36, anchor="ms",
            align="center")  # align to bottom middle of coordinates
 
     # our microsoft calendars don't like publishing descriptions?
     if (event.description):
-        d.text((leftstart, 140), event.description, font=desc_fnt)
+        d.text((leftstart, 170), event.description, font=desc_fnt)
 
     return out
 
