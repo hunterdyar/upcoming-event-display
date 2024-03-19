@@ -1,6 +1,6 @@
 # Next Event Display
 
-![WIP](Documentation/wip.jpg)
+![WIP](Documentation/display.jpg)
 
 An in-progress project to display upcoming events on a permenantly installed display in the Chatham Immersive Media space.
 
