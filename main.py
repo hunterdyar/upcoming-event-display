@@ -6,7 +6,7 @@ import logging
 from PIL import Image
 flipV = True
 flipH = True
-incomingHoursShift = 5
+incomingHoursShift = 4
 has_display = True
 
 
